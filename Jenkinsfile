@@ -9,11 +9,11 @@ pipeline {
       steps {
         git branch: 'master', url: 'https://github.com/Workingtechman/jenkins.git'
         script {
-          def folders = sh(script: 'ls apps/', returnStdout: true).trim()
+          def folders = sh(script: 'git diff --name-only HEAD~1..HEAD | cut -f2 -d \'/\'', returnStdout: true).trim()
           echo "folders is ${folders}"
           arrayStr = folders.split("\\r?\\n")
           println arrayStr
-          runParallelFunc(arrayStr)
+//          runParallelFunc(arrayStr)
         }
       }
     }
