@@ -13,7 +13,7 @@ pipeline {
           echo "folders is ${folders}"
           arrayStr = folders.split("\\r?\\n")
           for (i=0; i < arrayStr.size(); i++) {
-            if ( i !== "cpvb" || i !== "detection" || i !== "intersect" || i !== "main" || i !== "stvb" ) {
+            if ( arrayStr[i] !== "cpvb" || arrayStr[i] !== "detection" || arrayStr[i] !== "intersect" || arrayStr[i] !== "main" || arrayStr[i] !== "stvb" ) {
               echo "i is ${i}"
               echo "not ours FP"
               return 0
