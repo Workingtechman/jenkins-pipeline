@@ -17,7 +17,7 @@ pipeline {
           arrayStr = folders.split("\\r?\\n")
           for (i=0; i < arrayStr.size(); i++) {
             if ( arrayStr[i] == "cpvb" || arrayStr[i] == "detection" || arrayStr[i] == "intersect" || arrayStr[i] == "main" || arrayStr[i] == "stvb" ) {
-              echo "i is" + arrayStr[i]
+              echo "i is " + arrayStr[i]
               echo "Ours FP"
             }
             else {
