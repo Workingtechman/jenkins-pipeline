@@ -9,7 +9,7 @@ pipeline {
       steps {
         git branch: 'master', url: 'https://github.com/Workingtechman/jenkins.git'
         script {
-          def folders = sh(script: 'git diff --name-only HEAD~1..HEAD | cut -f2 -d \'/\'', returnStdout: true).trim()
+          def folders = sh(script: 'bash ./script.bash', returnStdout: true).trim()
           echo "folders is ${folders}"
           arrayStr = folders.split("\\r?\\n")
           for (i=0; i < arrayStr.size(); i++) {
