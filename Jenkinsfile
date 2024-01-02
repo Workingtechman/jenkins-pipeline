@@ -12,7 +12,7 @@ pipeline {
         }
         git branch: 'inside_root_fp1_few_fp', url: 'https://github.com/Workingtechman/jenkins.git'
         script {
-          def folders = sh(script: 'bash ../main-repo/script.bash', returnStdout: true).trim()
+          def folders = sh(script: 'bash ./main-repo/script.bash', returnStdout: true).trim()
           echo "folders is ${folders}"
           arrayStr = folders.split("\\r?\\n")
           for (i=0; i < arrayStr.size(); i++) {
