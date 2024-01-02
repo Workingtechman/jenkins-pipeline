@@ -36,7 +36,13 @@ done
 #  echo "=================================="
 #  echo "=================================="
 #echo "list resulting array:"
-for i in ${ARRAY2[*]}
-do
-  echo ${i}
-done
+#echo "number of arguments of ARRAY2 = ${#ARRAY2[*]}"
+if [[ ${#ARRAY2[*]} -eq 0  ]]
+then
+  echo "ARRAY2 is empty"
+else
+  for i in ${ARRAY2[*]}
+  do
+    echo ${i}
+  done
+fi
