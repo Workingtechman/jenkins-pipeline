@@ -34,7 +34,7 @@ pipeline {
           echo "runArrayFunc"
           runArrayFunc(arrayStr)
           echo "create map from arrastr.collectEntries"
-          map = arrayStr.collectEntries { [it, { runParallelFunc(it) } ] }
+          map = arrayStr.collectEntries { [it, runParallelFunc(it) ] }
 
 //          map.each{entry -> println "$entry.key: $entry.value"}
 //          echo "println map"
