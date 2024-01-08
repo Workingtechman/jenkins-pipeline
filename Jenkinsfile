@@ -45,11 +45,17 @@ pipeline {
 //          echo "runMapFunc"
 //          runMapFunc(map)
 
-          echo "run parallel"
-          parallel(map)
           echo "testFunc in this pipeline"
           testFunc("Evgen")
 
+        }
+      }
+    }
+    stage('paralleling') {
+      steps {
+        script {
+          echo "run parallel"
+          parallel(map)
         }
       }
     }
