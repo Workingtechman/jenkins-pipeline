@@ -42,6 +42,7 @@ pipeline {
         dir ('main-repo') {
           git branch: 'main', url: 'https://github.com/Workingtechman/jenkins-pipeline.git'
           script {
+            echo 'set baseCommit var and env.baseCommit'
             baseCommit = sh(script: "cat last_successful_build.txt", returnStdout: true).trim()
             env.baseCommit = "${baseCommit}"
           }
@@ -49,8 +50,10 @@ pipeline {
 //        git branch: 'inside_root_fp1_few_fp', url: 'https://github.com/Workingtechman/jenkins.git'
         checkout changelog: false, poll: false, scm: scmGit(branches: [[name: "${fpRepoBranch}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Workingtechman/jenkins.git']])
         script {
+          echo 'set lastCommit var and env.lastCommit'
           lastCommit = sh(script: "git rev-parse origin/" + fpRepoBranch, returnStdout: true).trim()
           env.lastCommit = "${lastCommit}"
+          sh 'echo "baseCommit is ${baseCommit} and lastCommit is ${lastCommit}"'
           if ( PARAM_ALL_FP == true ) {
             def map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
           }
