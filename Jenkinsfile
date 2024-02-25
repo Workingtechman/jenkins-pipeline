@@ -14,7 +14,7 @@ pipeline {
     booleanParam(name: 'PARAM_ALL_FP', defaultValue: false, description: 'Parameter to decide how much FPs to build')
   }
   stages {
-    stage('get previous successful commit') {
+    stage('get variables') {
       steps {
 //        script {
 //baseCommit = sh(script: "git rev-parse origin/" + env.BRANCH_NAME, returnStdout: true).trim()
