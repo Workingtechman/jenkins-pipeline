@@ -10,9 +10,9 @@ def fpRepoBranch = "inside_root_fp1_few_fp"
 
 pipeline {
   agent { label 'linux-agent' }
-//  parameters {
-//    booleanParam(name: 'PARAM_ALL_FP', defaultValue: ${PARAM_ALL_FP}, description: 'Parameter to decide how much FPs to build')
-//  }
+  parameters {
+    booleanParam(name: 'PARAM_ALL_FP', defaultValue: false, description: 'Parameter to decide how much FPs to build')
+  }
   stages {
     stage('get previous successful commit') {
       steps {
@@ -54,7 +54,7 @@ pipeline {
           lastCommit = sh(script: "git rev-parse origin/" + fpRepoBranch, returnStdout: true).trim()
           env.lastCommit = "${lastCommit}"
           sh 'echo "baseCommit is ${baseCommit} and lastCommit is ${lastCommit}"'
-          if ( PARAM_ALL_FP == true ) {
+          if ( params.PARAM_ALL_FP ) {
             echo "PARAM_ALL_FP is ${PARAM_ALL_FP}"
             def map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
           }
