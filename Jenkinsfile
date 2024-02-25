@@ -19,7 +19,7 @@ pipeline {
 //baseCommit = sh(script: "git rev-parse origin/" + env.BRANCH_NAME, returnStdout: true).trim()
 //        }
 	echo "env.Branch = ${env.BRANCH}"
-	echo "BRANCH_NAME = ${BRANCH_NAME}"
+//	echo "BRANCH_NAME = ${BRANCH_NAME}"
 	echo "env.BRANCH_NAME = ${env.BRANCH_NAME}"
 	echo "env.GIT_BRANCH = ${env.GIT_BRANCH}"
 	echo "env.CHANGE_TARGET = ${env.CHANGE_TARGET}"
