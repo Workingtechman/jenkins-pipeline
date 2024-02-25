@@ -6,6 +6,7 @@ def testFunc(String name) {
 }
 def baseCommit
 def lastCommit
+def fpRepoBranch = "inside_root_fp1_few_fp"
 
 pipeline {
   agent { label 'linux-agent' }
@@ -46,9 +47,9 @@ pipeline {
           }
         }
 //        git branch: 'inside_root_fp1_few_fp', url: 'https://github.com/Workingtechman/jenkins.git'
-        checkout changelog: false, poll: false, scm: scmGit(branches: [[name: 'inside_root_fp1_few_fp']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Workingtechman/jenkins.git']])
+        checkout changelog: false, poll: false, scm: scmGit(branches: [[name: "${fpRepoBranch}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Workingtechman/jenkins.git']])
         script {
-          lastCommit = sh(script: "git rev-parse origin/" + env.BRANCH_NAME, returnStdout: true).trim()
+          lastCommit = sh(script: "git rev-parse origin/" + fpRepoBranch, returnStdout: true).trim()
           env.lastCommit = "${lastCommit}"
           if ( PARAM_ALL_FP == true ) {
             def map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
