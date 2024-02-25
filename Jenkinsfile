@@ -45,7 +45,8 @@ pipeline {
             env.baseCommit = "${baseCommit}"
           }
         }
-        git branch: 'inside_root_fp1_few_fp', url: 'https://github.com/Workingtechman/jenkins.git'
+//        git branch: 'inside_root_fp1_few_fp', url: 'https://github.com/Workingtechman/jenkins.git'
+        checkout changelog: false, poll: false, scm: scmGit(branches: [[name: 'inside_root_fp1_few_fp']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Workingtechman/jenkins.git']])
         script {
           lastCommit = sh(script: "git rev-parse origin/" + env.BRANCH_NAME, returnStdout: true).trim()
           env.lastCommit = "${lastCommit}"
