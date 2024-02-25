@@ -55,11 +55,11 @@ pipeline {
           env.lastCommit = "${lastCommit}"
           sh 'echo "baseCommit is ${baseCommit} and lastCommit is ${lastCommit}"'
           if ( params.PARAM_ALL_FP ) {
-            echo "PARAM_ALL_FP is ${PARAM_ALL_FP}"
+            echo "true - PARAM_ALL_FP is ${PARAM_ALL_FP}"
             def map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
           }
           else {
-            echo "PARAM_ALL_FP is ${PARAM_ALL_FP}"
+            echo "false - PARAM_ALL_FP is ${PARAM_ALL_FP}"
 /*            def folders = sh(script: 'bash ./main-repo/script.bash', returnStdout: true).trim()
             echo "folders is ${folders}"
             arrayStr = folders.split("\\r?\\n")
