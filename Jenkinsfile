@@ -11,7 +11,7 @@ def fpRepoBranch = "inside_root_fp1_few_fp"
 pipeline {
   agent { label 'linux-agent' }
   parameters {
-    booleanParam(name: 'PARAM_ALL_FP', defaultValue: false, description: 'Parameter to decide how much FPs to build')
+    booleanParam(name: 'PARAM_ALL_FP', defaultValue: ${PARAM_ALL_FP}, description: 'Parameter to decide how much FPs to build')
   }
   stages {
     stage('get previous successful commit') {
