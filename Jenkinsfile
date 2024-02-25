@@ -13,13 +13,29 @@ pipeline {
     booleanParam(name: 'PARAM_ALL_FP', defaultValue: false, description: 'Parameter to decide how much FPs to build')
   }
   stages {
-//    stage('get previous successful commit') {
-//      steps {
+    stage('get previous successful commit') {
+      steps {
 //        script {
 //baseCommit = sh(script: "git rev-parse origin/" + env.BRANCH_NAME, returnStdout: true).trim()
 //        }
-//      }
-//    }
+	echo "env.Branch = ${env.BRANCH}"
+	echo "BRANCH_NAME = ${BRANCH_NAME}"
+	echo "env.BRANCH_NAME = ${env.BRANCH_NAME}"
+	echo "env.GIT_BRANCH = ${env.GIT_BRANCH}"
+	echo "env.CHANGE_TARGET = ${env.CHANGE_TARGET}"
+	echo "env.CHANGE_BRANCH = ${env.CHANGE_BRANCH}"
+	echo "env.CHANGE_ID = ${env.CHANGE_ID}"
+	sh '''
+	echo "in shell"
+	echo "BRANCH_NAME = ${BRANCH_NAME}"
+	echo "GIT_BRANCH = ${GIT_BRANCH}"
+	echo "CHANGE_BRANCH = ${CHANGE_BRANCH}"
+	echo "FROM_BRANCH = ${FROM_BRANCH}"
+	echo "CHANGE_ID = ${CHANGE_ID}"
+	echo "CHANGE_BRANCH = ${CHANGE_BRANCH}"
+	'''
+      }
+    }
     stage('get list of FPs') {
       steps {
         dir ('main-repo') {
