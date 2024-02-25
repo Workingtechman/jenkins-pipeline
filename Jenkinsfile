@@ -13,24 +13,26 @@ pipeline {
     booleanParam(name: 'PARAM_ALL_FP', defaultValue: false, description: 'Parameter to decide how much FPs to build')
   }
   stages {
-    stage('get previous successful commit') {
-      steps {
-        script {
-          baseCommit = sh(script: "cat last_successful_build.txt", returnStdout: true).trim()
+//    stage('get previous successful commit') {
+//      steps {
+//        script {
 //baseCommit = sh(script: "git rev-parse origin/" + env.BRANCH_NAME, returnStdout: true).trim()
-          lastCommit = sh(script: "git rev-parse origin/" + env.BRANCH_NAME, returnStdout: true).trim()
-          env.baseCommit = "${baseCommit}"
-          env.lastCommit = "${lastCommit}"
-        }
-      }
-    }
+//        }
+//      }
+//    }
     stage('get list of FPs') {
       steps {
         dir ('main-repo') {
           git branch: 'main', url: 'https://github.com/Workingtechman/jenkins-pipeline.git'
+          script {
+            baseCommit = sh(script: "cat last_successful_build.txt", returnStdout: true).trim()
+            env.baseCommit = "${baseCommit}"
+          }
         }
         git branch: 'inside_root_fp1_few_fp', url: 'https://github.com/Workingtechman/jenkins.git'
         script {
+          lastCommit = sh(script: "git rev-parse origin/" + env.BRANCH_NAME, returnStdout: true).trim()
+          env.lastCommit = "${lastCommit}"
           if ( PARAM_ALL_FP == true ) {
             def map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
           }
