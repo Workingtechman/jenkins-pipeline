@@ -56,7 +56,7 @@ pipeline {
           sh 'echo "baseCommit is ${baseCommit} and lastCommit is ${lastCommit}"'
           if ( params.PARAM_ALL_FP ) {
             echo "true - PARAM_ALL_FP is ${PARAM_ALL_FP}"
-            def map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
+            map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
             map.each{entry -> println "$entry.key"}
           }
           else {
