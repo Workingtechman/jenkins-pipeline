@@ -30,11 +30,11 @@ pipeline {
           git branch: 'main', url: 'https://github.com/Workingtechman/jenkins-pipeline.git'
         }
         git branch: 'inside_root_fp1_few_fp', url: 'https://github.com/Workingtechman/jenkins.git'
-        if ( PARAM_ALL_FP == true ) {
-          def map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
-        }
-        else {
-          script {
+        script {
+          if ( PARAM_ALL_FP == true ) {
+            def map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
+          }
+          else {
             def folders = sh(script: 'bash ./main-repo/script.bash', returnStdout: true).trim()
             echo "folders is ${folders}"
             arrayStr = folders.split("\\r?\\n")
@@ -67,7 +67,6 @@ pipeline {
 
             echo "testFunc in this pipeline"
             testFunc("Evgen")
-
           }
         }
       }
