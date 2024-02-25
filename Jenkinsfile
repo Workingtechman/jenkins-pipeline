@@ -61,7 +61,7 @@ pipeline {
           }
           else {
             echo "false - PARAM_ALL_FP is ${PARAM_ALL_FP}"
-/*            def folders = sh(script: 'bash ./main-repo/script.bash', returnStdout: true).trim()
+            def folders = sh(script: 'bash ./main-repo/script.bash', returnStdout: true).trim()
             echo "folders is ${folders}"
             arrayStr = folders.split("\\r?\\n")
             for (i=0; i < arrayStr.size(); i++) {
@@ -93,7 +93,6 @@ pipeline {
 
             echo "testFunc in this pipeline"
             testFunc("Evgen")
-*/
           }
         }
       }
