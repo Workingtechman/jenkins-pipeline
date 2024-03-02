@@ -12,6 +12,7 @@ pipeline {
   agent { label 'linux-agent' }
   parameters {
     booleanParam(name: 'PARAM_ALL_FP', defaultValue: false, description: 'Parameter to decide how much FPs to build')
+    string(name: 'TIMER', defaultValue: '5', description: 'Timer parameter for pause stage')
   }
   stages {
     stage('get variables') {
@@ -97,6 +98,12 @@ pipeline {
         }
       }
     }
+    stage('pause'){
+      steps {
+        echo "this stage pause for ${TIMER} sec"
+        sh "sleep ${TIMER}"
+      }
+}
     stage('paralleling') {
       steps {
         script {
