@@ -6,13 +6,14 @@ def testFunc(String name) {
 }
 def baseCommit
 def lastCommit
-def fpRepoBranch = "inside_root_fp1_few_fp"
+//def fpRepoBranch = "inside_root_fp1_few_fp"
 
 pipeline {
   agent { label 'linux-agent' }
   parameters {
     booleanParam(name: 'PARAM_ALL_FP', defaultValue: false, description: 'Parameter to decide how much FPs to build')
     string(name: 'TIMER', defaultValue: '5', description: 'Timer parameter for pause stage')
+    string(name: 'fpRepoBranch', defaultValue: 'inside_root_fp1_few_fp', description: 'Branch parameter')
   }
   stages {
     stage('get variables') {
@@ -49,10 +50,10 @@ pipeline {
           }
         }
 //        git branch: 'inside_root_fp1_few_fp', url: 'https://github.com/Workingtechman/jenkins.git'
-        checkout changelog: false, poll: false, scm: scmGit(branches: [[name: "${fpRepoBranch}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Workingtechman/jenkins.git']])
+        checkout changelog: false, poll: false, scm: scmGit(branches: [[name: "${params.fpRepoBranch}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Workingtechman/jenkins.git']])
         script {
           echo 'set lastCommit var and env.lastCommit'
-          lastCommit = sh(script: "git rev-parse origin/" + fpRepoBranch, returnStdout: true).trim()
+          lastCommit = sh(script: "git rev-parse origin/" + params.fpRepoBranch, returnStdout: true).trim()
           env.lastCommit = "${lastCommit}"
           sh 'echo "baseCommit is ${baseCommit} and lastCommit is ${lastCommit}"'
           if ( params.PARAM_ALL_FP ) {
