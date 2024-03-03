@@ -8,7 +8,7 @@ def baseCommit
 def lastCommit
 //def fpRepoBranch = "inside_root_fp1_few_fp"
 def folders
-def needPushCommit = false
+needPushCommit = false
 
 pipeline {
   agent { label 'linux-agent' }
