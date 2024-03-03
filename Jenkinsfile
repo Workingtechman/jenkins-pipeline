@@ -73,6 +73,7 @@ pipeline {
             else if ( "${folders}" == "ARRAY2 is empty" ) {
               echo "nothing to build"
               sh 'exit 0'
+              currentBuild.result = 'SUCCESS'
             }
             else {
               arrayStr = folders.split("\\r?\\n")
