@@ -114,7 +114,7 @@ pipeline {
     }
     stage('pause'){
       when {
-        expression { "${folders}" !== "ARRAY2 is empty" }
+        expression { folders !== "ARRAY2 is empty" }
       } 
       steps {
         echo "this stage pause for ${TIMER} sec"
@@ -123,7 +123,7 @@ pipeline {
 }
     stage('paralleling') {
       when {
-        expression { "${folders}" !== "ARRAY2 is empty" }
+        expression { folders !== "ARRAY2 is empty" }
       } 
       steps {
         script {
@@ -134,7 +134,7 @@ pipeline {
     }
     stage('pause after parallel'){
       when {
-        expression { "${folders}" !== "ARRAY2 is empty" }
+        expression { folders !== "ARRAY2 is empty" }
       } 
       steps {
         echo "this stage pause after paralleling for ${TIMER} sec"
@@ -143,7 +143,7 @@ pipeline {
     }
     stage('push successfull build'){
       when {
-        expression { "${folders}" !== "ARRAY2 is empty" }
+        expression { folders !== "ARRAY2 is empty" }
       } 
       steps {
         dir('main-repo'){
@@ -155,7 +155,7 @@ pipeline {
     }
     stage('nothing to build'){
       when {
-        expression { "${folders}" == "ARRAY2 is empty" }
+        expression { folders == "ARRAY2 is empty" }
       } 
       steps {
         echo "nothing to build"
