@@ -153,7 +153,7 @@ pipeline {
         }
       }
     }
-    stage('nothing to build''){
+    stage('nothing to build'){
       when {
         expression { "${folders}" == "ARRAY2 is empty" }
       } 
