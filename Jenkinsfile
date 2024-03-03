@@ -69,21 +69,21 @@ pipeline {
             echo "folders is ${folders}"
             if ( "${folders}" == "ui-kit" ) {
               echo "ui-kit - build all"
-              params.needPushCommit = true
+              params.needPushCommit = ${needPushCommit}
               map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile"), "ascons": runParallelFunc("ascons"), "svui": runParallelFunc("svui")]
               map.each{entry -> println "$entry.key"}
             }
             else if ( "${folders}" == "ARRAY2 is empty" ) {
               echo "nothing to build"
               env.folders = "${folders}"
-              params.needPushCommit = false
-              echo "needPushCommit is ${needPushCommit}"
+              params.needPushCommit = ${needPushCommit}
+              echo "params.needPushCommit is ${params.needPushCommit}"
               sh 'exit 0'
               currentBuild.result = 'SUCCESS'
             }
             else {
               arrayStr = folders.split("\\r?\\n")
-              params.needPushCommit = true
+              params.needPushCommit = ${needPushCommit}
               for (i=0; i < arrayStr.size(); i++) {
                 if ( arrayStr[i] == "cpvb" || arrayStr[i] == "detection" || arrayStr[i] == "intersect" || arrayStr[i] == "main" || arrayStr[i] == "stvb" || arrayStr[i] == "ascons" || arrayStr[i] == "svui" ) {
                   echo "i is " + arrayStr[i]
