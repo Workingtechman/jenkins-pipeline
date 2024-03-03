@@ -1,14 +1,14 @@
 #!/bin/bash
 
 ARRAY=$(git diff --name-only ${baseCommit}..${lastCommit} | grep ui-kit/ | cut -f1 -d '/')
-if [[ "${ARRAY[0]}" == "ui-kit"  ]]
+if [[ "${ARRAY}" == "ui-kit"  ]]
 then
 #  echo "ARRAY is ${ARRAY[0]}"
-  ARRAY2=("${ARRAY[0]}")
+  echo "${ARRAY}"
 else
-# ARRAY=$(git diff --name-only HEAD~1..HEAD | grep apps/ | cut -f2 -d '/')
+# ARRAY=($(git diff --name-only HEAD~1..HEAD | grep apps/ | cut -f2 -d '/'))
 # echo "baseCommit is ${baseCommit} and lastCommit is ${lastCommit}"
-  ARRAY=$(git diff --name-only ${baseCommit}..${lastCommit} | grep apps/ | cut -f2 -d '/')
+  ARRAY=($(git diff --name-only ${baseCommit}..${lastCommit} | grep apps/ | cut -f2 -d '/'))
   ARRAY2=( )
 #  echo "list of interesting changed paths:"
 #  for i in ${ARRAY[*]}
