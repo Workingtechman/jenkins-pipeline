@@ -146,7 +146,7 @@ pipeline {
       when {
         anyOf {
           not { expression { env.folders == "ARRAY2 is empty" } }
-          not { expression { !params.PARAM_ALL_FP } }
+          expression { params.PARAM_ALL_FP == true }
         }
       } 
       steps {
