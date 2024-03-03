@@ -7,6 +7,7 @@ def testFunc(String name) {
 def baseCommit
 def lastCommit
 //def fpRepoBranch = "inside_root_fp1_few_fp"
+def folders
 
 pipeline {
   agent { label 'linux-agent' }
@@ -63,7 +64,7 @@ pipeline {
           }
           else {
             echo "false - PARAM_ALL_FP is ${PARAM_ALL_FP}"
-            def folders = sh(script: 'bash ./main-repo/script.bash', returnStdout: true).trim()
+            folders = sh(script: 'bash ./main-repo/script.bash', returnStdout: true).trim()
             echo "folders is ${folders}"
             if ( "${folders}" == "ui-kit" ) {
               echo "ui-kit - build all"
@@ -112,12 +113,18 @@ pipeline {
       }
     }
     stage('pause'){
+      when {
+        expression { "${folders}" !== "ARRAY2 is empty" }
+      } 
       steps {
         echo "this stage pause for ${TIMER} sec"
         sh "sleep ${TIMER}"
       }
 }
     stage('paralleling') {
+      when {
+        expression { "${folders}" !== "ARRAY2 is empty" }
+      } 
       steps {
         script {
           echo "run parallel"
@@ -126,18 +133,32 @@ pipeline {
       }
     }
     stage('pause after parallel'){
+      when {
+        expression { "${folders}" !== "ARRAY2 is empty" }
+      } 
       steps {
         echo "this stage pause after paralleling for ${TIMER} sec"
         sh "sleep ${TIMER}"
       }
     }
     stage('push successfull build'){
+      when {
+        expression { "${folders}" !== "ARRAY2 is empty" }
+      } 
       steps {
         dir('main-repo'){
           withCredentials([gitUsernamePassword(credentialsId: 'github_jenkins_push_username_token', gitToolName: 'Default')]) {
             sh 'git status && git remote -v && git remote show origin && git config --global user.name "Jenkins dind" && git config --global user.email false@example.com && echo "${lastCommit}" > ./last_successful_build.txt && git add ./last_successful_build.txt && git commit -a -m "updated success build hash commit" && git push origin HEAD:main'
           }
         }
+      }
+    }
+    stage('nothing to build''){
+      when {
+        expression { "${folders}" == "ARRAY2 is empty" }
+      } 
+      steps {
+        echo "nothing to build"
       }
     }
   }
