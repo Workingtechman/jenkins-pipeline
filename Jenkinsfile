@@ -74,7 +74,7 @@ pipeline {
             else if ( "${folders}" == "ARRAY2 is empty" ) {
               echo "nothing to build"
               env.folders = "${folders}"
-              needPushCommit = true
+              needPushCommit = false
               sh 'exit 0'
               currentBuild.result = 'SUCCESS'
             }
@@ -91,6 +91,7 @@ pipeline {
                   return 0
                 }
               }
+              needPushCommit = true
               echo "arrayStr"
               println arrayStr
               echo "runArrayFunc"
