@@ -144,7 +144,10 @@ pipeline {
     }
     stage('push successfull build'){
       when {
-        not { expression { env.folders == "ARRAY2 is empty" } }
+        anyOf {
+          not { expression { env.folders == "ARRAY2 is empty" } }
+          not { params.PARAM_ALL_FP == true }
+        }
       } 
       steps {
         dir('main-repo'){
