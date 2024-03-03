@@ -120,7 +120,7 @@ pipeline {
         }
       }
     }
-    stage('pause'){
+    stage('pause after parallel'){
       steps {
         echo "this stage pause after paralleling for ${TIMER} sec"
         sh "sleep ${TIMER}"
