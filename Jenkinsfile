@@ -8,7 +8,7 @@ def baseCommit
 def lastCommit
 //def fpRepoBranch = "inside_root_fp1_few_fp"
 def folders
-needPushCommit = false
+Boolean needPushCommit = false
 
 pipeline {
   agent { label 'linux-agent' }
@@ -69,21 +69,21 @@ pipeline {
             echo "folders is ${folders}"
             if ( "${folders}" == "ui-kit" ) {
               echo "ui-kit - build all"
-              needPushCommit = true
+              params.needPushCommit = true
               map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile"), "ascons": runParallelFunc("ascons"), "svui": runParallelFunc("svui")]
               map.each{entry -> println "$entry.key"}
             }
             else if ( "${folders}" == "ARRAY2 is empty" ) {
               echo "nothing to build"
               env.folders = "${folders}"
-              needPushCommit = false
+              params.needPushCommit = false
               echo "needPushCommit is ${needPushCommit}"
               sh 'exit 0'
               currentBuild.result = 'SUCCESS'
             }
             else {
               arrayStr = folders.split("\\r?\\n")
-              needPushCommit = true
+              params.needPushCommit = true
               for (i=0; i < arrayStr.size(); i++) {
                 if ( arrayStr[i] == "cpvb" || arrayStr[i] == "detection" || arrayStr[i] == "intersect" || arrayStr[i] == "main" || arrayStr[i] == "stvb" || arrayStr[i] == "ascons" || arrayStr[i] == "svui" ) {
                   echo "i is " + arrayStr[i]
@@ -157,7 +157,7 @@ pipeline {
       } 
       steps {
         echo "params.PARAM_ALL_FP is ${params.PARAM_ALL_FP}"
-        echo "params.needPushCommit is ${needPushCommit}"
+        echo "params.needPushCommit is ${params.needPushCommit}"
         dir('main-repo'){
           withCredentials([gitUsernamePassword(credentialsId: 'github_jenkins_push_username_token', gitToolName: 'Default')]) {
             sh 'git status && git remote -v && git remote show origin && git config --global user.name "Jenkins dind" && git config --global user.email false@example.com && echo "${lastCommit}" > ./last_successful_build.txt && git add ./last_successful_build.txt && git commit -a -m "updated success build hash commit" && git push origin HEAD:main'
