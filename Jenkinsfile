@@ -70,6 +70,10 @@ pipeline {
               map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
               map.each{entry -> println "$entry.key"}
             }
+            else if ( "${folders}" == "ARRAY2 is empty" ) {
+              echo "nothing to build"
+              return 0
+            }
             else {
               arrayStr = folders.split("\\r?\\n")
               for (i=0; i < arrayStr.size(); i++) {
