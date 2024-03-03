@@ -151,13 +151,13 @@ pipeline {
       when {
         anyOf {
           expression { params.PARAM_ALL_FP == false }
-          expression { needPushCommit == true }
+          expression { params.needPushCommit == true }
 //          not { expression { env.folders == "ARRAY2 is empty" } }
         }
       } 
       steps {
         echo "params.PARAM_ALL_FP is ${params.PARAM_ALL_FP}"
-        echo "needPushCommit is ${needPushCommit}"
+        echo "params.needPushCommit is ${needPushCommit}"
         dir('main-repo'){
           withCredentials([gitUsernamePassword(credentialsId: 'github_jenkins_push_username_token', gitToolName: 'Default')]) {
             sh 'git status && git remote -v && git remote show origin && git config --global user.name "Jenkins dind" && git config --global user.email false@example.com && echo "${lastCommit}" > ./last_successful_build.txt && git add ./last_successful_build.txt && git commit -a -m "updated success build hash commit" && git push origin HEAD:main'
