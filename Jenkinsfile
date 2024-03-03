@@ -120,6 +120,17 @@ pipeline {
         }
       }
     }
+    stage('pause'){
+      steps {
+        echo "this stage pause after paralleling for ${TIMER} sec"
+        sh "sleep ${TIMER}"
+      }
+    }
+    stage('push successfull build'){
+      steps {
+        sh 'git config --global user.name "Jenkins dind" && git config --global user.email false@example.com && git add last_successful_build.txt && git commit -a -m "updated success build hash commit" && git push origin HEAD:master'
+      }
+    }
   }
 }
 
