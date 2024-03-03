@@ -156,6 +156,7 @@ pipeline {
         }
       } 
       steps {
+        echo "params.PARAM_ALL_FP is ${params.PARAM_ALL_FP}"
         echo "needPushCommit is ${needPushCommit}"
         dir('main-repo'){
           withCredentials([gitUsernamePassword(credentialsId: 'github_jenkins_push_username_token', gitToolName: 'Default')]) {
