@@ -74,6 +74,7 @@ pipeline {
             else if ( "${folders}" == "ARRAY2 is empty" ) {
               echo "nothing to build"
               env.folders = "${folders}"
+              needPushCommit = true
               sh 'exit 0'
               currentBuild.result = 'SUCCESS'
             }
@@ -146,6 +147,7 @@ pipeline {
       when {
         anyOf {
           expression { params.PARAM_ALL_FP == false }
+          expression { needPushCommit == true }
 //          not { expression { env.folders == "ARRAY2 is empty" } }
         }
       } 
