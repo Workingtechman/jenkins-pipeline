@@ -15,7 +15,7 @@ pipeline {
   parameters {
     booleanParam(name: 'PARAM_ALL_FP', defaultValue: false, description: 'Parameter to decide how much FPs to build')
     string(name: 'TIMER', defaultValue: '5', description: 'Timer parameter for pause stage')
-    string(name: 'fpRepoBranch', defaultValue: 'inside_root_fp1_few_fp', description: 'Branch parameter')
+    string(name: 'fpRepoBranch', defaultValue: 'inside_root_fp1_few_fp_ui-kit', description: 'Branch parameter')
   }
   stages {
     stage('get variables') {
