@@ -59,7 +59,7 @@ pipeline {
           sh 'echo "baseCommit is ${baseCommit} and lastCommit is ${lastCommit}"'
           if ( params.PARAM_ALL_FP ) {
             echo "true - PARAM_ALL_FP is ${PARAM_ALL_FP}"
-            map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
+            map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile"), "ascons": runParallelFunc("ascons"), "svui": runParallelFunc("svui")]
             map.each{entry -> println "$entry.key"}
           }
           else {
@@ -68,7 +68,7 @@ pipeline {
             echo "folders is ${folders}"
             if ( "${folders}" == "ui-kit" ) {
               echo "ui-kit - build all"
-              map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile")]
+              map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile"), "ascons": runParallelFunc("ascons"), "svui": runParallelFunc("svui")]
               map.each{entry -> println "$entry.key"}
             }
             else if ( "${folders}" == "ARRAY2 is empty" ) {
@@ -80,7 +80,7 @@ pipeline {
             else {
               arrayStr = folders.split("\\r?\\n")
               for (i=0; i < arrayStr.size(); i++) {
-                if ( arrayStr[i] == "cpvb" || arrayStr[i] == "detection" || arrayStr[i] == "intersect" || arrayStr[i] == "main" || arrayStr[i] == "stvb" ) {
+                if ( arrayStr[i] == "cpvb" || arrayStr[i] == "detection" || arrayStr[i] == "intersect" || arrayStr[i] == "main" || arrayStr[i] == "stvb" || arrayStr[i] == "ascons" || arrayStr[i] == "svui" ) {
                   echo "i is " + arrayStr[i]
                   echo "Ours FP"
                 }

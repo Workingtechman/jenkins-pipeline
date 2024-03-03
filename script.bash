@@ -17,7 +17,7 @@ else
 #  done
   for i in ${ARRAY[*]}
   do
-    if [[ "${i}" == "cpvb" || "${i}" == "detection" || "${i}" == "intersect" || "${i}" == "main" || "${i}" == "stvb" ]]
+    if [[ "${i}" == "cpvb" || "${i}" == "detection" || "${i}" == "intersect" || "${i}" == "main" || "${i}" == "stvb" || "${i}" == "ascons" || "${i}" == "svui" ]]
     then
   #    echo "first loop and i = ${i}" 
       for x in ${ARRAY2[*]}
