@@ -149,11 +149,11 @@ pipeline {
     }
     stage('push successfull build'){
       when {
-        anyOf {
+//        anyOf {
           expression { params.PARAM_ALL_FP == false }
           expression { needPushCommit == "yes" }
 //          not { expression { env.folders == "ARRAY2 is empty" } }
-        }
+//        }
       } 
       steps {
         echo "params.PARAM_ALL_FP is " +params.PARAM_ALL_FP
