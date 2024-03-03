@@ -69,6 +69,7 @@ pipeline {
             echo "folders is ${folders}"
             if ( "${folders}" == "ui-kit" ) {
               echo "ui-kit - build all"
+              needPushCommit = true
               map = ["cpvb": runParallelFunc("cpvb"), "detection": runParallelFunc("detection"), "intersect": runParallelFunc("intersect"), "main": runParallelFunc("main"), "stvb": runParallelFunc("stvb"), "profile": runParallelFunc("profile"), "ascons": runParallelFunc("ascons"), "svui": runParallelFunc("svui")]
               map.each{entry -> println "$entry.key"}
             }
@@ -81,6 +82,7 @@ pipeline {
             }
             else {
               arrayStr = folders.split("\\r?\\n")
+              needPushCommit = true
               for (i=0; i < arrayStr.size(); i++) {
                 if ( arrayStr[i] == "cpvb" || arrayStr[i] == "detection" || arrayStr[i] == "intersect" || arrayStr[i] == "main" || arrayStr[i] == "stvb" || arrayStr[i] == "ascons" || arrayStr[i] == "svui" ) {
                   echo "i is " + arrayStr[i]
@@ -92,7 +94,6 @@ pipeline {
                   return 0
                 }
               }
-              needPushCommit = true
               echo "arrayStr"
               println arrayStr
               echo "runArrayFunc"
