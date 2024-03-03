@@ -128,7 +128,9 @@ pipeline {
     }
     stage('push successfull build'){
       steps {
-        sh 'git config --global user.name "Jenkins dind" && git config --global user.email false@example.com && echo "${lastCommit}" > ./main-repo/last_successful_build.txt && git add ./main-repo/last_successful_build.txt && git commit -a -m "updated success build hash commit" && git push origin HEAD:master'
+        dir('main-repo'){
+          sh 'git status && git remote -v && git remote show origin && git config --global user.name "Jenkins dind" && git config --global user.email false@example.com && echo "${lastCommit}" > ./last_successful_build.txt && git add ./last_successful_build.txt && git commit -a -m "updated success build hash commit" && git push origin HEAD:master'
+        }
       }
     }
   }
